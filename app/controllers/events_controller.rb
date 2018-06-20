@@ -117,7 +117,7 @@ class EventsController < ApplicationController
         @event.asubscribe2 == nil
         @event.update_column(:asubscribe2, current_ele.id)
         @event.eleattendees << current_ele
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
         redirect_to "/"
       
@@ -126,13 +126,13 @@ class EventsController < ApplicationController
         
         @event.update_column(:asubscribe3, current_ele.id)
         @event.eleattendees << current_ele
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
 
         redirect_to "/"
       elsif
         @event.asubscribe4 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe4, current_ele.id)
         @event.eleattendees << current_ele
         flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
@@ -141,7 +141,7 @@ class EventsController < ApplicationController
         
       elsif
         @event.asubscribe5 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe5, current_ele.id)
         @event.eleattendees << current_ele
         flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
@@ -149,11 +149,11 @@ class EventsController < ApplicationController
         if @event.professor_id != nil
           @idprof = @event.professor_id
           @prof = Pro.find(@idprof)
-          SendMailAfterFiveMailer.send_five(@prof, @event).deliver
+          
         end
       elsif
         @event.asubscribe6 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe6, current_ele.id)
         @event.eleattendees << current_ele
 
@@ -161,7 +161,7 @@ class EventsController < ApplicationController
         redirect_to "/"
       elsif
         @event.asubscribe7 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe7, current_ele.id)
         @event.eleattendees << current_ele
         flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
@@ -169,7 +169,7 @@ class EventsController < ApplicationController
     
       elsif
         @event.asubscribe8 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe8, current_ele.id)
         @event.eleattendees << 
 
@@ -177,7 +177,7 @@ class EventsController < ApplicationController
         redirect_to "/"
       elsif
         @event.asubscribe9 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe9, current_ele.id)
         @event.eleattendees << current_ele
         
@@ -185,7 +185,7 @@ class EventsController < ApplicationController
         redirect_to "/"
       elsif
         @event.asubscribe10 == nil
-        SubscribeToEventMailer.send_mail_after_subscribing(@user, @event).deliver
+        
         @event.update_column(:asubscribe10, current_ele.id)
         @event.eleattendees << current_ele
     
@@ -193,7 +193,7 @@ class EventsController < ApplicationController
         redirect_to "/"
       else
         flash[:danger] = "Vous participez déjà à l'événement !"
-        redirect_to "/p"
+        redirect_to "/"
       end
     else
       if 
@@ -338,6 +338,7 @@ class EventsController < ApplicationController
       else
       end
     end
+#    SendMailAfterPaymentMailer.notify(@user, @event).deliver
     redirect_to '/'
   end
 
