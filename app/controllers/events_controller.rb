@@ -1,21 +1,19 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :subscribe]
  
- 
- 
-  # GET /events
-  # GET /events.json
+  # Pour les flash et les mails, voir repo UrbanHubVFinale2
+
+
   def index
     @events = Event.all
   end
 
-  # GET /events/1
-  # GET /events/1.json
+
   def show
     @event = Event.find(params[:id])
     @allele = Ele.all
     @allpro = Pro.all
-    
+
     if @event.naturecreateur == "eleve"
       @creator = Ele.find(@event.creator_id)
     elsif @event.naturecreateur == "professeur"
@@ -23,30 +21,27 @@ class EventsController < ApplicationController
       @professor = Pro.find(@event.professor_id)
     else
     end
+
     if @event.professeur == "present"
       @professor = Pro.find_by_id(@event.professor_id)
     else
     end
   end
 
-  # GET /events/new
+
   def new
     @event = Event.new
   end
 
-  # GET /events/1/edit
+
   def edit
   end
-
-  # POST /events
-  # POST /events.json
 
 
   def create
     @event = Event.new(event_params)
     @event.professeur = "vide"
     @event.etat = "open"
-#    @event.asubscribe << 0
     if ele_signed_in?
       @event.creator_id = current_ele.id
       @event.naturecreateur = "eleve"
@@ -68,8 +63,7 @@ class EventsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
+
   def update
     respond_to do |format|
       if @event.update(event_params)
@@ -82,8 +76,7 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1
-  # DELETE /events/1.json
+
   def destroy
     @event.destroy
     respond_to do |format|
@@ -91,9 +84,6 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-
-
 
 
 
@@ -143,19 +133,19 @@ class EventsController < ApplicationController
         @event.update_column(:asubscribe10, current_ele.id)
         @event.eleattendees << current_ele
       else
-        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
+        #        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
       end
     else
       if 
         @event.professor_id == nil
         @event.update_column(:professor_id, current_pro.id)
         @event.update_column(:professeur, "present")
-        flash[:success] = "Vous participez à l'événement en tant que prof!" 
+        #        flash[:success] = "Vous participez à l'événement en tant que prof!" 
       else
-        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
+        #        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
       end
     end
-    flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
+    #    flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
     redirect_to @event
   end
 
@@ -164,40 +154,39 @@ class EventsController < ApplicationController
   def addeletoinvitation  
     @ele = Ele.find(params[:ele_id])
     @event = Event.find(params[:test])
- #   if 
- #   @event.attendees.include? @user
- #   flash[:danger] = "#{@user.name} participe déjà à l'événement !" 
- #   redirect_to @event
- #   else
+    #   if 
+    #   @event.attendees.include? @user
+    #   flash[:danger] = "#{@user.name} participe déjà à l'événement !" 
+    #   redirect_to @event
+    #   else
     @event.eleattendees << @ele
     flash[:success] = "#{@ele.firstname} est ajouté à l'événement ! !" 
     redirect_to @event
- #   end
+    #   end
   end
 
 
   def addprotoinvitation  
     @pro = Pro.find(params[:pro_id])
     @event = Event.find(params[:test])
- #   if 
- #   @event.attendees.include? @user
- #   flash[:danger] = "#{@user.name} participe déjà à l'événement !" 
- #   redirect_to @event
- #   else
+    #   if 
+    #   @event.attendees.include? @user
+    #   flash[:danger] = "#{@user.name} participe déjà à l'événement !" 
+    #   redirect_to @event
+    #   else
     @event.proinvitatees << @pro
     flash[:success] = "#{@pro.firstname} est ajouté à l'événement ! !" 
     redirect_to @event
- #   end
+    #   end
   end
 
 
   def closingevent
     @event = Event.find(params[:id])
     @event.update_columns(etat: "close")
-    
 
-  # il faudra qu'elle envoie un mail à tous les ele enregistrés dans @event.asubscribeX
-  # "le prof a validé l'event, allez sur la page de l'event pour payer et recevoir votre pass"
+    # il faudra qu'elle envoie un mail à tous les ele enregistrés dans @event.asubscribeX
+    # "le prof a validé l'event, allez sur la page de l'event pour payer et recevoir votre pass"
     redirect_to @event
   end
 
@@ -205,7 +194,6 @@ class EventsController < ApplicationController
   def pay
     @user = current_ele
     @event = Event.find(params[:id])
-# faire payer grace a stripe et une fois que c'est fait, envoie de l'email avec pass
     @amount = 500
         
     customer = Stripe::Customer.create(
@@ -220,23 +208,20 @@ class EventsController < ApplicationController
       :currency    => 'usd'
     )
 
-    
-
     rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to new_charge_path
 
-
-  redirect_to '/'
+    redirect_to @event
   end
-#il faut rajouter la fontion evoi mail after validation
+
+
   def after_pay
    
     @event = Event.find(params[:id])
     @user = current_ele 
    
-    if ele_signed_in?
-    
+    if ele_signed_in?    
         if @event.asubscribe == current_ele.id
           @event.update_columns(apayer: current_ele.id)    
         elsif @event.asubscribe2 == current_ele.id
@@ -260,8 +245,8 @@ class EventsController < ApplicationController
         else
         end
     end
-#    SendMailAfterPaymentMailer.notify(@user, @event).deliver
-    redirect_to '/'
+    #    SendMailAfterPaymentMailer.notify(@user, @event).deliver
+    redirect_to @event
   end
 
   def subscribeandpay
