@@ -101,7 +101,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @user = current_ele
     @pro = current_pro
-    
+
     if ele_signed_in?
       if @event.asubscribe == nil 
         @event.update_column(:asubscribe, current_ele.id)
@@ -144,7 +144,6 @@ class EventsController < ApplicationController
         @event.eleattendees << current_ele
       else
         flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
-        redirect_to "/"
       end
     else
       if 
@@ -152,14 +151,12 @@ class EventsController < ApplicationController
         @event.update_column(:professor_id, current_pro.id)
         @event.update_column(:professeur, "present")
         flash[:success] = "Vous participez à l'événement en tant que prof!" 
-        redirect_to "/"
       else
         flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
-        redirect_to "/"
       end
     end
     flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-    redirect_to "/"
+    redirect_to @event
   end
 
 
