@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_131112) do
+ActiveRecord::Schema.define(version: 2018_06_20_134950) do
 
   create_table "eles", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -25,8 +25,55 @@ ActiveRecord::Schema.define(version: 2018_06_20_131112) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "firstname"
+    t.string "lastname"
+    t.string "photo"
+    t.string "description"
+    t.string "passion1"
+    t.string "passion2"
+    t.string "passion3"
+    t.string "passion4"
+    t.string "ville"
+    t.string "departement"
     t.index ["email"], name: "index_eles_on_email", unique: true
     t.index ["reset_password_token"], name: "index_eles_on_reset_password_token", unique: true
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "description"
+    t.string "discipline"
+    t.string "date"
+    t.string "ville"
+    t.string "departement"
+    t.decimal "prix"
+    t.integer "creator_id"
+    t.integer "professor_id"
+    t.string "etat"
+    t.string "naturecreateur"
+    t.string "professeur"
+    t.integer "asubscribe"
+    t.integer "asubscribe2"
+    t.integer "asubscribe3"
+    t.integer "asubscribe4"
+    t.integer "asubscribe5"
+    t.integer "asubscribe6"
+    t.integer "asubscribe7"
+    t.integer "asubscribe8"
+    t.integer "asubscribe9"
+    t.integer "asubscribe10"
+    t.integer "apayer"
+    t.integer "apayer2"
+    t.integer "apayer3"
+    t.integer "apayer4"
+    t.integer "apayer5"
+    t.integer "apayer6"
+    t.integer "apayer7"
+    t.integer "apayer8"
+    t.integer "apayer9"
+    t.integer "apayer10"
   end
 
   create_table "pros", force: :cascade do |t|
@@ -42,6 +89,16 @@ ActiveRecord::Schema.define(version: 2018_06_20_131112) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "firstname"
+    t.string "lastname"
+    t.string "photo"
+    t.string "description"
+    t.string "passion1"
+    t.string "passion2"
+    t.string "passion3"
+    t.string "passion4"
+    t.string "ville"
+    t.string "departement"
     t.index ["email"], name: "index_pros_on_email", unique: true
     t.index ["reset_password_token"], name: "index_pros_on_reset_password_token", unique: true
   end
