@@ -283,60 +283,30 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @user = current_ele 
    
-
     if ele_signed_in?
-      if @event.asubscribe != nil
+    
         if @event.asubscribe == current_ele.id
           @event.update_columns(apayer: current_ele.id)    
-          
-        end
-      elsif @event.asubscribe2 != nil
-        if @event.asubscribe2 == current_ele.id
+        elsif @event.asubscribe2 == current_ele.id
           @event.update_columns(apayer2: current_ele.id)
-          
-        end
-      elsif @event.asubscribe3 != nil
-        if @event.asubscribe3 == current_ele.id
+        elsif @event.asubscribe3 == current_ele.id
           @event.update_columns(apayer3: current_ele.id)
-         
-        end
-      elsif @event.asubscribe4 != nil
-        if @event.asubscribe4 == current_ele.id
+        elsif @event.asubscribe4 == current_ele.id
           @event.update_columns(apayer4: current_ele.id)
-          
-         
-        end
-      elsif @event.asubscribe5 != nil
-        if @event.asubscribe5 == current_ele.id
+        elsif @event.asubscribe5 == current_ele.id
           @event.update_columns(apayer5: current_ele.id)
-         
-        end
-      elsif @event.asubscribe6 != nil
-        if @event.asubscribe6 == current_ele.id
+        elsif @event.asubscribe6 == current_ele.id
           @event.update_columns(apayer6: current_ele.id)
-          
-        end
-      elsif @event.asubscribe7 != nil
-        if @event.asubscribe7 == current_ele.id
+        elsif @event.asubscribe7 == current_ele.id
           @event.update_columns(apayer7: current_ele.id)
-          
-        end
-      elsif @event.asubscribe8 != nil
-        if @event.asubscribe8 == current_ele.id
+        elsif @event.asubscribe8 == current_ele.id
           @event.update_columns(apayer8: current_ele.id)
-        end
-      elsif @event.asubscribe9 != nil
-        if @event.asubscribe9 == current_ele.id
+        elsif @event.asubscribe9 == current_ele.id
           @event.update_columns(apayer9: current_ele.id)
-          
-        end
-      elsif @event.asubscribe10 != nil
-        if @event.asubscribe10 == current_ele.id
+        elsif @event.asubscribe10 == current_ele.id
           @event.update_columns(apayer10: current_ele.id)
-        
+        else
         end
-      else
-      end
     end
 #    SendMailAfterPaymentMailer.notify(@user, @event).deliver
     redirect_to '/'
