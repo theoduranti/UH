@@ -338,7 +338,6 @@ class EventsController < ApplicationController
       else
       end
     end
-    SendMailAfterPaymentMailer.notify(@user, @event).deliver
     redirect_to '/'
   end
 
