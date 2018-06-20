@@ -101,110 +101,65 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @user = current_ele
     @pro = current_pro
-
+    
     if ele_signed_in?
-
       if @event.asubscribe == nil 
         @event.update_column(:asubscribe, current_ele.id)
-
-
-
-        @event.eleattendees << current_ele
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/eles/index"
-    
+        @event.eleattendees << current_ele    
       elsif
         @event.asubscribe2 == nil
         @event.update_column(:asubscribe2, current_ele.id)
         @event.eleattendees << current_ele
-        
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
-      
       elsif
         @event.asubscribe3 == nil
-        
         @event.update_column(:asubscribe3, current_ele.id)
         @event.eleattendees << current_ele
-        
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-
-        redirect_to "/"
       elsif
         @event.asubscribe4 == nil
-        
         @event.update_column(:asubscribe4, current_ele.id)
-        @event.eleattendees << current_ele
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-    
-        redirect_to "/"
-        
+        @event.eleattendees << current_ele        
       elsif
         @event.asubscribe5 == nil
-        
         @event.update_column(:asubscribe5, current_ele.id)
         @event.eleattendees << current_ele
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
-        if @event.professor_id != nil
-          @idprof = @event.professor_id
-          @prof = Pro.find(@idprof)
-          
-        end
       elsif
         @event.asubscribe6 == nil
-        
         @event.update_column(:asubscribe6, current_ele.id)
         @event.eleattendees << current_ele
-
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
       elsif
         @event.asubscribe7 == nil
-        
         @event.update_column(:asubscribe7, current_ele.id)
         @event.eleattendees << current_ele
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
-    
       elsif
         @event.asubscribe8 == nil
-        
         @event.update_column(:asubscribe8, current_ele.id)
-        @event.eleattendees << 
-
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
+        @event.eleattendees << current_ele
       elsif
         @event.asubscribe9 == nil
-        
         @event.update_column(:asubscribe9, current_ele.id)
         @event.eleattendees << current_ele
-        
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
       elsif
         @event.asubscribe10 == nil
-        
         @event.update_column(:asubscribe10, current_ele.id)
         @event.eleattendees << current_ele
-    
-        flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
-        redirect_to "/"
       else
-        flash[:danger] = "Vous participez déjà à l'événement !"
+        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
         redirect_to "/"
       end
     else
       if 
         @event.professor_id == nil
-
         @event.update_column(:professor_id, current_pro.id)
         @event.update_column(:professeur, "present")
         flash[:success] = "Vous participez à l'événement en tant que prof!" 
         redirect_to "/"
+      else
+        flash[:danger] = "Vous participez déjà à l'événement ou il n'y a plus de place !"
+        redirect_to "/"
       end
     end
+    flash[:success] = "Vous participez à l'événement en tant qu'élève!" 
+    redirect_to "/"
   end
 
 
